@@ -13,7 +13,10 @@ end
 
 require File.join(%w{declarative_authorization railsengine}) if defined?(::Rails::Engine)
 
-ActionController::Base.send :include, Authorization::AuthorizationInController
-ActionController::Base.helper Authorization::AuthorizationHelper
+ActiveSupport.on_load(:action_controller) do 
+  ActionController::Base.send :include, Authorization::AuthorizationInController  
+  ActionController::Base.helper Authorization::AuthorizationHelper
+end
+
 
 ActiveRecord::Base.send :include, Authorization::AuthorizationInModel if defined?(ActiveRecord)
